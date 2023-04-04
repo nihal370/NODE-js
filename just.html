@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form id="tweet-form">
+    <label for="tweet-content">Tweet content:</label>
+    <textarea id="tweet-content" name="tweet" rows="4" cols="50"></textarea>
+    <br>
+    <button type="submit">Tweet</button>
+  </form>
+<script >
+  const tweetForm = document.querySelector("#tweet-form");
+
+tweetForm.addEventListener("submit", event => {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  const tweetContent = document.querySelector("#tweet-content").value;
+
+  fetch("/tweets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: tweetContent
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Do something with the response data
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
+</script>  
+</body>
+</html>
